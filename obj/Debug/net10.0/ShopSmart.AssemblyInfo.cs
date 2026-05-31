@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ShopSmart")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+05da28861704ac234fb1425036816b59c8d50e54")]
 [assembly: System.Reflection.AssemblyProductAttribute("ShopSmart")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ShopSmart")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
