@@ -1,0 +1,73 @@
+﻿@{
+    ViewData["Title"] = "Operations Dashboard";
+}
+
+<div class="container my-5 text-white">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <div>
+            <h2 class="fw-bold m-0 text-glow-neon text-info">Operations Control Center</h2>
+            <p class="text-muted small m-0">Real-time product inventory and system monitoring.</p>
+        </div>
+        <span class="badge bg-success border border-success px-3 py-2 rounded-pill shadow-sm">● Status: Active</span>
+    </div>
+
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            <div class="glass-card p-4 shadow">
+                <h6 class="text-muted small fw-bold mb-2">Gross Revenue Vector</h6>
+                <h3 class="fw-bold m-0 text-glow-neon">$14,245.50</h3>
+                <div class="text-success small mt-2">↑ +12.5% vs previous cycle</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="glass-card p-4 shadow">
+                <h6 class="text-muted small fw-bold mb-2">Orders in Queue</h6>
+                <h3 class="fw-bold m-0 text-info">64 Units</h3>
+                <div class="text-info small mt-2">4 items awaiting routing approval</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="glass-card p-4 shadow">
+                <h6 class="text-muted small fw-bold mb-2">Terminal Traffic</h6>
+                <h3 class="fw-bold m-0 text-white">1,832 Visits</h3>
+                <div class="text-muted small mt-2">Stable server bandwidth load</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-card p-4 shadow-lg">
+        <h4 class="fw-bold mb-4">Stock Matrix Database</h4>
+        <div class="table-responsive">
+            <table class="table table-dark table-hover border-0 align-middle m-0">
+                <thead>
+                    <tr class="text-muted border-bottom border-secondary">
+                        <th scope="col" class="py-3 px-3">Item Descriptor</th>
+                        <th scope="col" class="py-3">Ecosystem Category</th>
+                        <th scope="col" class="py-3">Stock Allocation</th>
+                        <th scope="col" class="py-3">Value Valuation</th>
+                    </tr>
+                </thead>
+                <tbody class="border-0">
+                    <tr class="border-bottom border-muted">
+                        <td class="py-3 px-3 fw-semibold text-info">Pro Tactile Controller</td>
+                        <td>Peripherals</td>
+                        <td>42 units</td>
+                        <td class="fw-bold">$199.99</td>
+                    </tr>
+                    <tr class="border-bottom border-muted">
+                        <td class="py-3 px-3 fw-semibold text-info">UltraWide Curved 34" Display</td>
+                        <td>Displays</td>
+                        <td>12 units</td>
+                        <td class="fw-bold">$549.99</td>
+                    </tr>
+                    <tr>
+                        <td class="py-3 px-3 fw-semibold text-info">Cyber Mechanical Keyboard</td>
+                        <td>Peripherals</td>
+                        <td>28 units</td>
+                        <td class="fw-bold">$145.00</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

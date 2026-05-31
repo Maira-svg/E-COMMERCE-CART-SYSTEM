@@ -1,0 +1,254 @@
+﻿@{
+    ViewData["Title"] = "ShopSmart - Premium Storefront";
+}
+
+<!-- Hero Glass Banner -->
+<div class="text-center my-5 py-5 glass-card p-5 shadow-lg position-relative overflow-hidden">
+    <div class="position-absolute top-0 start-0 w-100 h-100" style="background: radial-gradient(circle at 50% 20%, rgba(0,242,254,0.15), transparent 60%); pointer-events: none;"></div>
+    <span class="badge rounded-pill px-3 py-2 mb-3 border border-info text-info" style="background: rgba(0,242,254,0.1)">Exclusive Setup Gear 2026</span>
+    <h1 class="display-3 fw-bold mb-3 text-white">Welcome to <span class="text-glow-neon" style="background: linear-gradient(45deg, #00f2fe, #4facfe); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">ShopSmart</span></h1>
+    <p class="text-muted fs-5 max-w-2xl mx-auto mb-4">Discover curated high-end tech peripherals and aesthetic layout essentials optimized for your workspace.</p>
+    <a href="#shop" class="btn btn-neon px-5 py-3 fs-6">Explore Inventory</a>
+</div>
+
+<!-- Products Showcase Segment -->
+<div class="my-5" id="shop">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <h3 class="fw-bold text-white m-0 border-start border-info border-4 ps-3">Trending Drops</h3>
+        <a asp-controller="Cart" asp-action="Index" class="btn btn-outline-light rounded-pill btn-sm px-4">View Cart 🛒</a>
+    </div>
+
+    <div class="row g-4">
+        <!-- Item 1 -->
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100 glass-card text-white overflow-hidden">
+                <div class="position-relative">
+                    <img src="https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=600" class="card-img-top object-fit-cover" style="height: 220px;" alt="Peripheral Controller">
+                    <span class="position-absolute top-0 end-0 bg-info text-dark fw-bold m-3 px-3 py-1 rounded-pill small shadow">Hot</span>
+                </div>
+                <div class="card-body p-4 d-flex flex-column justify-content-between">
+                    <div>
+                        <h5 class="fw-bold mb-1">Pro Tactile Controller</h5>
+                        <p class="text-muted small">Custom configurations, remappable inputs, and precision haptics.</p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <span class="fs-5 fw-bold text-info">$199.99</span>
+                        <a asp-controller="Cart" asp-action="Index" class="btn btn-outline-info rounded-pill px-3 btn-sm fw-semibold">Add To Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Item 2 -->
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100 glass-card text-white overflow-hidden">
+                <div class="position-relative">
+                    <img src="https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=600" class="card-img-top object-fit-cover" style="height: 220px;" alt="Aesthetic Monitor">
+                </div>
+                <div class="card-body p-4 d-flex flex-column justify-content-between">
+                    <div>
+                        <h5 class="fw-bold mb-1">UltraWide Curved 34"</h5>
+                        <p class="text-muted small">Immersive panoramic work panel featuring ultra-smooth response rates.</p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <span class="fs-5 fw-bold text-info">$549.99</span>
+                        <a asp-controller="Cart" asp-action="Index" class="btn btn-outline-info rounded-pill px-3 btn-sm fw-semibold">Add To Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Item 3 -->
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100 glass-card text-white overflow-hidden">
+                <div class="position-relative">
+                    <img src="https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=600" class="card-img-top object-fit-cover" style="height: 220px;" alt="Mechanical Deck">
+                </div>
+                <div class="card-body p-4 d-flex flex-column justify-content-between">
+                    <div>
+                        <h5 class="fw-bold mb-1">Cyber Mechanical Keyboard</h5>
+                        <p class="text-muted small">Hot-swappable tactile switches encased in custom housing.</p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <span class="fs-5 fw-bold text-info">$145.00</span>
+                        <a asp-controller="Cart" asp-action="Index" class="btn btn-outline-info rounded-pill px-3 btn-sm fw-semibold">Add To Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Item 4 -->
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100 glass-card text-white overflow-hidden">
+                <div class="position-relative">
+                    <img src="https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=600" class="card-img-top object-fit-cover" style="height: 220px;" alt="Gaming Station">
+                </div>
+                <div class="card-body p-4 d-flex flex-column justify-content-between">
+                    <div>
+                        <h5 class="fw-bold mb-1">Apex Wireless RGB Mouse</h5>
+                        <p class="text-muted small">Lightweight frame tracking with pixel-perfect modern 26K DPI optical nodes.</p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <span class="fs-5 fw-bold text-info">$89.50</span>
+                        <a asp-controller="Cart" asp-action="Index" class="btn btn-outline-info rounded-pill px-3 btn-sm fw-semibold">Add To Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Item 5 -->
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100 glass-card text-white overflow-hidden">
+                <div class="position-relative">
+                    <img src="https://images.unsplash.com/photo-1548484352-ea579e5233a8?w=600" class="card-img-top object-fit-cover" style="height: 220px;" alt="Audio Setup">
+                    <span class="position-absolute top-0 end-0 bg-warning text-dark fw-bold m-3 px-3 py-1 rounded-pill small shadow">Sale</span>
+                </div>
+                <div class="card-body p-4 d-flex flex-column justify-content-between">
+                    <div>
+                        <h5 class="fw-bold mb-1">Studio Acoustic Headset</h5>
+                        <p class="text-muted small">Hi-Fi Spatial audio drivers engineered with deep active cancellation properties.</p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <span class="fs-5 fw-bold text-info">$120.00</span>
+                        <a asp-controller="Cart" asp-action="Index" class="btn btn-outline-info rounded-pill px-3 btn-sm fw-semibold">Add To Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Item 6 (FIXED IMAGE 🌟) -->
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100 glass-card text-white overflow-hidden">
+                <div class="position-relative">
+                    <img src="https://images.pexels.com/photos/4006151/pexels-photo-4006151.jpeg?auto=compress&cs=tinysrgb&w=600" class="card-img-top object-fit-cover" style="height: 220px;" alt="Desk Pad Mat">
+                </div>
+                <div class="card-body p-4 d-flex flex-column justify-content-between">
+                    <div>
+                        <h5 class="fw-bold mb-1">Minimalist Felt Desk Mat</h5>
+                        <p class="text-muted small">Premium dynamic anti-slip micro texture surface protecting tracking flow.</p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <span class="fs-5 fw-bold text-info">$35.00</span>
+                        <a asp-controller="Cart" asp-action="Index" class="btn btn-outline-info rounded-pill px-3 btn-sm fw-semibold">Add To Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Item 7 -->
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100 glass-card text-white overflow-hidden">
+                <div class="position-relative">
+                    <img src="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=600" class="card-img-top object-fit-cover" style="height: 220px;" alt="Tech Light">
+                </div>
+                <div class="card-body p-4 d-flex flex-column justify-content-between">
+                    <div>
+                        <h5 class="fw-bold mb-1">Monitor Smart Bar Light</h5>
+                        <p class="text-muted small">Asymmetric optical tracking system reducing eye strains actively.</p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <span class="fs-5 fw-bold text-info">$65.00</span>
+                        <a asp-controller="Cart" asp-action="Index" class="btn btn-outline-info rounded-pill px-3 btn-sm fw-semibold">Add To Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Item 8 -->
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100 glass-card text-white overflow-hidden">
+                <div class="position-relative">
+                    <img src="https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=600" class="card-img-top object-fit-cover" style="height: 220px;" alt="Walnut Deck Base">
+                </div>
+                <div class="card-body p-4 d-flex flex-column justify-content-between">
+                    <div>
+                        <h5 class="fw-bold mb-1">Solid Walnut Laptop Riser</h5>
+                        <p class="text-muted small">Ergonomic premium natural heavy wood stand boosting visual comfort limits.</p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <span class="fs-5 fw-bold text-info">$75.00</span>
+                        <a asp-controller="Cart" asp-action="Index" class="btn btn-outline-info rounded-pill px-3 btn-sm fw-semibold">Add To Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Item 9 (FIXED IMAGE 🌟) -->
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100 glass-card text-white overflow-hidden">
+                <div class="position-relative">
+                    <img src="https://images.pexels.com/photos/5082579/pexels-photo-5082579.jpeg?auto=compress&cs=tinysrgb&w=600" class="card-img-top object-fit-cover" style="height: 220px;" alt="Charger Hub">
+                    <span class="position-absolute top-0 end-0 bg-success text-dark fw-bold m-3 px-3 py-1 rounded-pill small shadow">Eco</span>
+                </div>
+                <div class="card-body p-4 d-flex flex-column justify-content-between">
+                    <div>
+                        <h5 class="fw-bold mb-1">Magnetic Charging Hub</h5>
+                        <p class="text-muted small">Fast multi-device docking array engineered with sleek spatial profiles.</p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <span class="fs-5 fw-bold text-info">$49.99</span>
+                        <a asp-controller="Cart" asp-action="Index" class="btn btn-outline-info rounded-pill px-3 btn-sm fw-semibold">Add To Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Item 10 -->
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100 glass-card text-white overflow-hidden">
+                <div class="position-relative">
+                    <img src="https://images.unsplash.com/photo-1524678606370-a47ad25cb82a?w=600" class="card-img-top object-fit-cover" style="height: 220px;" alt="Premium Audio Pods">
+                </div>
+                <div class="card-body p-4 d-flex flex-column justify-content-between">
+                    <div>
+                        <h5 class="fw-bold mb-1">NeoPods Sound Pods</h5>
+                        <p class="text-muted small">True wireless dynamic noise isolating earbuds with premium satin coating.</p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <span class="fs-5 fw-bold text-info">$159.00</span>
+                        <a asp-controller="Cart" asp-action="Index" class="btn btn-outline-info rounded-pill px-3 btn-sm fw-semibold">Add To Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Item 11 -->
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100 glass-card text-white overflow-hidden">
+                <div class="position-relative">
+                    <img src="https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?w=600" class="card-img-top object-fit-cover" style="height: 220px;" alt="Smart Fitness Watch">
+                </div>
+                <div class="card-body p-4 d-flex flex-column justify-content-between">
+                    <div>
+                        <h5 class="fw-bold mb-1">Titanium Smart Watch v4</h5>
+                        <p class="text-muted small">Always-on AMOLED matrix tracker housed within robust tactical metal plating.</p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <span class="fs-5 fw-bold text-info">$299.00</span>
+                        <a asp-controller="Cart" asp-action="Index" class="btn btn-outline-info rounded-pill px-3 btn-sm fw-semibold">Add To Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Item 12 -->
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card h-100 glass-card text-white overflow-hidden">
+                <div class="position-relative">
+                    <img src="https://images.unsplash.com/photo-1555532538-dcdbd01d373d?w=600" class="card-img-top object-fit-cover" style="height: 220px;" alt="Desk Neon Ambiance">
+                    <span class="position-absolute top-0 end-0 bg-info text-dark fw-bold m-3 px-3 py-1 rounded-pill small shadow">New</span>
+                </div>
+                <div class="card-body p-4 d-flex flex-column justify-content-between">
+                    <div>
+                        <h5 class="fw-bold mb-1">Ambient Smart Neon Rope</h5>
+                        <p class="text-muted small">Flexible diffuse lighting strip synced perfectly via desk desktop controls.</p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <span class="fs-5 fw-bold text-info">$45.00</span>
+                        <a asp-controller="Cart" asp-action="Index" class="btn btn-outline-info rounded-pill px-3 btn-sm fw-semibold">Add To Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

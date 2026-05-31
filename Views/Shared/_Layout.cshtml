@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ShopSmart</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <!-- Premium Navbar Layout styled for ShopSmart -->
+        <nav class="navbar navbar-expand-sm navbar-dark border-bottom border-secondary mb-3 shadow-lg" style="background: rgba(15, 12, 27, 0.8); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-color: rgba(255,255,255,0.08) !important;">
+            <div class="container py-1">
+                <a class="navbar-brand fw-bold fs-4 tracking-wider text-glow-neon text-info" asp-area="" asp-controller="Home" asp-action="Index">
+                    🛍️ ShopSmart
+                </a>
+                <button class="navbar-expand-sm navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1 justify-content-end gap-2">
+                        <li class="nav-item">
+                            <a class="nav-link text-white fw-semibold px-3 rounded-pill active" style="background: rgba(255,255,255,0.05);" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white fw-semibold px-3 opacity-75" style="transition: opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.75'" asp-area="" asp-controller="Cart" asp-action="Index">My Cart 🛒</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white fw-semibold px-3 border border-secondary rounded-pill btn-sm opacity-75" style="border-color: rgba(255,255,255,0.25) !important; transition: all 0.2s;" onmouseover="this.style.opacity='1'; this.style.borderColor='rgba(0, 242, 254, 0.5) !important';" onmouseout="this.style.opacity='0.75'; this.style.borderColor='rgba(255,255,255,0.25) !important';" asp-area="" asp-controller="Admin" asp-action="Login">Admin Portal 🔐</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

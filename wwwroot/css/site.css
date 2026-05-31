@@ -1,0 +1,44 @@
+/* Premium Dark & Glow Theme */
+body {
+    background: linear-gradient(135deg, #0b0816 0%, #110d24 50%, #04020a 100%);
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+}
+
+/* Glassmorphism Card Wrapper */
+.glass-card {
+    background: rgba(255, 255, 255, 0.03) !important;
+    backdrop-filter: blur(12px) -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 16px;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+    .glass-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(0, 242, 254, 0.4) !important;
+        box-shadow: 0 15px 35px rgba(0, 242, 254, 0.15);
+    }
+
+/* Text Glow Effect */
+.text-glow-neon {
+    text-shadow: 0 0 15px rgba(0, 242, 254, 0.6);
+}
+
+/* Premium Neon Buttons */
+.btn-neon {
+    background: linear-gradient(45deg, #00f2fe, #4facfe);
+    color: #000;
+    font-weight: 600;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 24px;
+    transition: all 0.3s ease;
+}
+
+    .btn-neon:hover {
+        box-shadow: 0 0 20px rgba(0, 242, 254, 0.8);
+        transform: scale(1.02);
+        color: #000;
+    }
