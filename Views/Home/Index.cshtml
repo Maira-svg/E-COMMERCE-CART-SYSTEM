@@ -1,0 +1,1024 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Daraz Ultimate | Premium Shopping Store</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --daraz-orange: #f85606; --daraz-gray-bg: #f4f6f9; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--daraz-gray-bg); color: #1a1e2b; }
+        .text-orange, .text-daraz { color: var(--daraz-orange) !important; }
+        .bg-orange { background-color: var(--daraz-orange) !important; }
+        .top-bar { background: #ffffff; font-size: 12px; padding: 8px 0; border-bottom: 1px solid #e9ecef; }
+        .top-links a { color: #4a5568; text-decoration: none; font-weight: 500; transition: all 0.2s; }
+        .top-links a:hover { color: var(--daraz-orange); }
+        .main-header { background: #fff; padding: 12px 0; position: sticky; top: 0; z-index: 1020; box-shadow: 0 2px 12px rgba(0,0,0,0.05); }
+        .logo-wrapper { cursor: pointer; display: flex; align-items: baseline; }
+        .logo-main { font-size: 32px; font-weight: 800; color: var(--daraz-orange); letter-spacing: -1px; }
+        .logo-sub { font-size: 18px; font-weight: 500; color: #2d3748; margin-left: 6px; }
+        .search-input { background: #f1f3f5; border: none; padding: 12px 16px; font-size: 14px; border-radius: 48px; }
+        .search-input:focus { background: white; box-shadow: 0 0 0 2px rgba(248,86,6,0.2); outline: none; }
+        .btn-search { background: var(--daraz-orange); color: white; border-radius: 48px; width: 48px; border: none; }
+        .btn-search:hover { background: #db4a02; }
+        .action-item { text-align: center; cursor: pointer; position: relative; }
+        .action-badge { position: absolute; top: -8px; right: -8px; background: var(--daraz-orange); color: white; border-radius: 30px; padding: 2px 8px; font-size: 10px; font-weight: 800; }
+        .category-sidebar { background: white; border-radius: 20px; padding: 8px 0; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid #edf2f7; }
+        .category-item { padding: 12px 20px; font-size: 14px; font-weight: 500; color: #2d3748; cursor: pointer; transition: all 0.2s; border-radius: 12px; margin: 2px 8px; }
+        .category-item:hover, .category-item.active { background: #fff0e6; color: var(--daraz-orange); }
+        .promo-banner { background: linear-gradient(115deg, #0f172a 0%, #1e293b 50%, #f85606 100%); border-radius: 28px !important; height: 180px; }
+        .btn-daraz { background: var(--daraz-orange); color: white; font-weight: 700; padding: 8px 20px; border-radius: 60px; border: none; transition: all 0.2s; }
+        .btn-daraz:hover { background: #c2410c; transform: translateY(-1px); }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 22px; }
+        .product-card { background: white; border-radius: 20px; overflow: hidden; transition: all 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.03); border: 1px solid #eef2f6; }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 20px 30px -12px rgba(0,0,0,0.12); border-color: #ffe0cc; }
+        .product-img { height: 210px; width: 100%; object-fit: cover; background: #f0f2f5; }
+        .cart-sidebar { position: fixed; top: 0; right: -480px; width: 480px; height: 100%; background: white; z-index: 3000; transition: right 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1); display: flex; flex-direction: column; box-shadow: -10px 0 40px rgba(0,0,0,0.1); }
+        .cart-sidebar.open { right: 0; }
+        .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2999; display: none; backdrop-filter: blur(3px); }
+        .cart-overlay.open { display: block; }
+        .toast-notification { position: fixed; bottom: 30px; left: 30px; background: #1e293b; color: white; padding: 12px 24px; border-radius: 60px; transform: translateY(100px); opacity: 0; transition: all 0.25s; z-index: 10000; font-size: 13px; border-left: 4px solid var(--daraz-orange); }
+        .toast-notification.show { transform: translateY(0); opacity: 1; }
+        .chatbot-toggle-btn { position: fixed; bottom: 28px; right: 28px; width: 58px; height: 58px; background: var(--daraz-orange); border-radius: 30px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 8px 20px rgba(248,86,6,0.4); z-index: 4000; }
+        .chatbot-window { position: fixed; bottom: 100px; right: 28px; width: 360px; height: 500px; background: white; border-radius: 24px; z-index: 4000; display: none; flex-direction: column; overflow: hidden; box-shadow: 0 25px 45px rgba(0,0,0,0.2); }
+        .chatbot-window.open { display: flex; animation: slideUp 0.2s ease; }
+        @@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .chatbot-header { background: var(--daraz-orange); padding: 14px 18px; color: white; }
+        .chat-msg { max-width: 85%; padding: 10px 14px; border-radius: 20px; font-size: 13px; line-height: 1.4; }
+        .bot-msg { background: #f1f3f5; color: #1e293b; align-self: flex-start; border-bottom-left-radius: 5px; }
+        .user-msg { background: var(--daraz-orange); color: white; align-self: flex-end; border-bottom-right-radius: 5px; }
+        .admin-thumb-img { width: 50px; height: 50px; object-fit: cover; border-radius: 12px; border: 1px solid #e2e8f0; background: #f0f2f5; }
+        .custom-input, .form-select { border-radius: 16px; border: 1px solid #e2e8f0; padding: 12px 16px; font-size: 14px; }
+        .custom-input:focus, .form-select:focus { border-color: var(--daraz-orange); box-shadow: 0 0 0 3px rgba(248,86,6,0.15); }
+        @@media (max-width: 768px) { .product-grid { gap: 12px; } .cart-sidebar { width: 100%; right: -100%; } }
+        .sticky-top-table { position: sticky; top: 0; background: white; z-index: 2; }
+        .payment-modal .modal-content { border-radius: 24px; }
+        .card-input { padding: 12px 16px; border-radius: 12px; border: 1px solid #e2e8f0; width: 100%; margin-bottom: 12px; }
+        .card-input:focus { outline: none; border-color: var(--daraz-orange); box-shadow: 0 0 0 2px rgba(248,86,6,0.1); }
+        .quantity-btn { width: 30px; height: 30px; border-radius: 50%; border: 1px solid #ddd; background: white; cursor: pointer; }
+        .quantity-btn:hover { background: var(--daraz-orange); color: white; border-color: var(--daraz-orange); }
+        .order-item-card { border-left: 3px solid var(--daraz-orange); }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div class="top-links">
+                <a href="#" class="me-3 fw-bold"><i class="fas fa-store me-1"></i> Sell on Daraz</a>
+                <a href="#" class="me-3">Affiliate Hub</a>
+                <a href="#">24/7 Support</a>
+            </div>
+            <div id="authTopWidget" class="top-links"></div>
+        </div>
+    </div>
+
+    <header class="main-header">
+        <div class="container d-flex align-items-center justify-content-between flex-wrap gap-2">
+            <div class="logo-wrapper" onclick="window.location.reload()">
+                <span class="logo-main">daraz</span><span class="logo-sub">ultimate</span>
+            </div>
+            <div class="search-box-container flex-grow-1 mx-3" id="headerSearchWrapper">
+                <div class="input-group">
+                    <input type="text" class="form-control search-input" id="searchField" placeholder="Search products..." onkeyup="filterProductsBySearch()">
+                    <button class="btn btn-search" type="button"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+            <div class="header-actions d-flex align-items-center gap-3">
+                <div class="action-item" onclick="window.location.reload()">
+                    <i class="fas fa-sync-alt fa-lg text-secondary"></i>
+                    <small class="d-block text-muted" style="font-size:9px;">Sync</small>
+                </div>
+                <div class="action-item position-relative" id="cartActionIcon" onclick="toggleCart()">
+                    <i class="fas fa-shopping-cart fa-lg text-dark"></i>
+                    <span class="action-badge" id="cartCount">0</span>
+                    <small class="d-block text-muted" style="font-size:9px;">Cart</small>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container my-4">
+        <div id="customerMarketplaceView">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="category-sidebar mb-4">
+                        <div class="category-heading px-3 py-2 fw-bold text-uppercase small text-muted">Categories</div>
+                        <div class="category-item active" onclick="filterCategory('All')"><i class="fas fa-th me-2"></i>All Items</div>
+                        <div class="category-item" onclick="filterCategory('Electronic Devices')"><i class="fas fa-mobile-alt me-2"></i>Electronic Devices</div>
+                        <div class="category-item" onclick="filterCategory('Electronic Accessories')"><i class="fas fa-headphones me-2"></i>Accessories</div>
+                        <div class="category-item" onclick="filterCategory('Fashion & Wear')"><i class="fas fa-tshirt me-2"></i>Fashion</div>
+                        <div class="category-item" onclick="filterCategory('Home & Lifestyle')"><i class="fas fa-couch me-2"></i>Home & Lifestyle</div>
+                        <div class="category-item" onclick="filterCategory('Gaming & Gear')"><i class="fas fa-gamepad me-2"></i>Gaming</div>
+                        <div class="category-item" onclick="filterCategory('Food & Kitchen')"><i class="fas fa-utensils me-2"></i>Food & Kitchen</div>
+                        <div class="category-item" onclick="filterCategory('Sports & Fitness')"><i class="fas fa-dumbbell me-2"></i>Sports & Fitness</div>
+                        <div class="category-item" onclick="filterCategory('Baby & Kids')"><i class="fas fa-baby me-2"></i>Baby & Kids</div>
+                        <div class="category-item" onclick="filterCategory('Beauty & Skincare')"><i class="fas fa-spa me-2"></i>Beauty & Skincare</div>
+                    </div>
+                    <div class="card border-0 shadow-sm bg-dark text-white p-3 rounded-4 mb-3">
+                        <h6 class="fw-bold text-warning"><i class="fas fa-shield-alt"></i> Admin Control</h6>
+                        <p class="small text-white-50">Admin access requires login</p>
+                        <button class="btn btn-warning btn-sm fw-bold w-100" onclick="checkAdminAccess()"><i class="fas fa-lock me-1"></i> Admin Panel</button>
+                    </div>
+                    <div class="card border-0 shadow-sm p-3 bg-white rounded-4 small">
+                        <i class="fas fa-database text-orange mb-2"></i> <span class="fw-bold" id="totalProductsCount">0</span> Products | All Categories
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="promo-banner p-4 text-white rounded-4 mb-4 d-flex flex-column justify-content-center">
+                        <span class="badge bg-success align-self-start mb-2 px-3 py-1 rounded-pill"><i class="fas fa-credit-card me-1"></i> Secure Payments</span>
+                        <h2 class="fw-bold">Premium Shopping Store</h2>
+                        <p class="text-white-50">Electronics | Fashion | Gaming | Kitchen | Sports | Beauty & More</p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="fw-bold" id="sectionTitle"><i class="fas fa-fire text-orange me-2"></i>Featured Products</h4>
+                    </div>
+                    <div class="product-grid" id="productContainer"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="adminControlDashboardView" class="d-none">
+            <div class="d-flex flex-wrap justify-content-between align-items-center pb-3 mb-4 border-bottom">
+                <div><h2 class="fw-bold"><i class="fas fa-crown text-orange me-2"></i>Admin Dashboard</h2><p>Welcome, <span id="activeAdminDisplay" class="fw-bold">Admin</span></p></div>
+                <button class="btn btn-outline-secondary rounded-pill px-4" onclick="switchToAdminView(false)"><i class="fas fa-store me-1"></i> Back to Store</button>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="card p-4 border-0 shadow-sm rounded-4">
+                        <h5 id="formActionTitle"><i class="fas fa-plus-circle text-orange me-2"></i>Add/Edit Product</h5>
+                        <form id="productCrudForm" onsubmit="handleFormSubmission(event)">
+                            <input type="hidden" id="crudProductId">
+                            <div class="mb-3"><label class="small fw-bold">Title</label><input type="text" id="crudTitle" class="form-control custom-input" required></div>
+                            <div class="mb-3"><label class="small fw-bold">Category</label><select id="crudCategory" class="form-select"><option>Electronic Devices</option><option>Electronic Accessories</option><option>Fashion & Wear</option><option>Home & Lifestyle</option><option>Gaming & Gear</option><option>Food & Kitchen</option><option>Sports & Fitness</option><option>Baby & Kids</option><option>Beauty & Skincare</option></select></div>
+                            <div class="mb-3"><label class="small fw-bold">Price (PKR)</label><input type="number" id="crudPrice" class="form-control" required></div>
+                            <div class="mb-3"><label class="small fw-bold">Image URL</label><input type="text" id="crudImg" class="form-control" required></div>
+                            <button type="submit" class="btn btn-daraz w-100" id="submitBtnText">Save</button>
+                            <button type="button" class="btn btn-light w-100 mt-2" onclick="clearCrudForm()">Cancel</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="card border-0 shadow-sm rounded-4 p-3">
+                        <div class="d-flex justify-content-between"><h5><i class="fas fa-table-list me-2"></i>Product Catalog</h5><span class="badge bg-orange text-white px-3" id="adminTotalCount">0 items</span></div>
+                        <div class="table-responsive" style="max-height: 520px;">
+                            <table class="table align-middle">
+                                <thead class="table-light sticky-top-table">
+                                    <tr><th>Image</th><th>Title</th><th>Category</th><th>Price</th><th>Actions</th></tr>
+                                </thead>
+                                <tbody id="adminTableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="authModal" data-bs-backdrop="static" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0">
+                <div class="modal-header border-0"><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+                <div class="modal-body p-4">
+                    <div id="loginFormSegment"><h3 class="fw-bold text-orange text-center mb-3">Login to Your Account</h3><form onsubmit="executeLogin(event)"><div class="mb-3"><label class="fw-bold small">Email Address</label><input type="email" id="loginEmail" class="form-control custom-input mt-1" placeholder="your@email.com" required></div><div class="mb-3"><label class="fw-bold small">Password</label><input type="password" id="loginPass" class="form-control custom-input mt-1" placeholder="••••••••" required></div><button type="submit" class="btn btn-daraz w-100 py-2">Login</button><p class="mt-3 text-center text-muted small">Don't have an account? <a href="#" onclick="switchToRegister()" class="text-orange fw-bold">Sign Up</a></p></form></div>
+                    <div id="registerFormSegment" class="d-none"><h3 class="fw-bold text-orange text-center mb-3">Create Account</h3><form onsubmit="executeRegister(event)"><div class="mb-2"><label class="fw-bold small">Full Name</label><input type="text" id="regName" class="form-control custom-input mt-1" required></div><div class="mb-2"><label class="fw-bold small">Email Address</label><input type="email" id="regEmail" class="form-control custom-input mt-1" required></div><div class="mb-2"><label class="fw-bold small">Password</label><input type="password" id="regPass" class="form-control custom-input mt-1" required></div><div class="mb-3"><label class="fw-bold small">Account Type</label><select id="regRole" class="form-select mt-1"><option value="USER">Customer</option><option value="ADMIN">Administrator</option></select></div><button type="submit" class="btn btn-daraz w-100 py-2">Sign Up</button><p class="mt-3 text-center"><a href="#" onclick="switchToLogin()" class="text-orange">Already have account? Login</a></p></form></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div class="modal fade" id="paymentModal" data-bs-backdrop="static" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4 border-0 payment-modal">
+                <div class="modal-header border-0">
+                    <h5 class="fw-bold"><i class="fas fa-credit-card text-orange me-2"></i>Complete Payment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="text-center mb-3">
+                        <i class="fas fa-lock text-muted me-1"></i> <span class="small text-muted">Secure Payment</span>
+                    </div>
+                    <div id="paymentAmount" class="text-center fs-3 fw-bold text-orange mb-4">Rs. 0</div>
+                    <div id="paymentOrderSummary" class="bg-light p-3 rounded-3 mb-3" style="max-height: 200px; overflow-y: auto;"></div>
+                    <form onsubmit="processPayment(event)">
+                        <div class="mb-3"><label class="small fw-bold text-muted">Card Number</label><input type="text" id="cardNumber" class="card-input" placeholder="1234 5678 9012 3456" maxlength="19" required></div>
+                        <div class="row">
+                            <div class="col-6"><label class="small fw-bold text-muted">Expiry Date</label><input type="text" id="cardExpiry" class="card-input" placeholder="MM/YY" maxlength="5" required></div>
+                            <div class="col-6"><label class="small fw-bold text-muted">CVV</label><input type="password" id="cardCvv" class="card-input" placeholder="123" maxlength="3" required></div>
+                        </div>
+                        <div class="mb-4"><label class="small fw-bold text-muted">Cardholder Name</label><input type="text" id="cardName" class="card-input" placeholder="AS PER CARD" required></div>
+                        <button type="submit" class="btn btn-daraz w-100 py-2 fw-bold"><i class="fas fa-check-circle me-2"></i>Pay Now</button>
+                    </form>
+                    <p class="text-center text-muted small mt-3"><i class="fas fa-shield-alt me-1"></i> Test Mode - Any card works</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="p-3 border-bottom d-flex justify-content-between align-items-center">
+            <h5 class="text-orange mb-0"><i class="fas fa-bag-shopping me-2"></i>Your Cart</h5>
+            <button class="btn-close" onclick="toggleCart()"></button>
+        </div>
+        <div class="flex-grow-1 overflow-auto p-3" id="cartItems"></div>
+        <div id="cartFooter" class="p-3 border-top"></div>
+    </div>
+    <div class="toast-notification" id="toastMsg"></div>
+    <div class="chatbot-toggle-btn" onclick="toggleChatbot()"><i class="fas fa-robot fa-xl"></i></div>
+    <div class="chatbot-window" id="chatbotWindow">
+        <div class="chatbot-header d-flex justify-content-between">
+            <div><i class="fas fa-comment-dots me-2"></i> AI Assistant</div>
+            <button class="btn-close btn-close-white btn-sm" onclick="toggleChatbot()"></button>
+        </div>
+        <div class="chatbot-messages p-3" id="chatbotMessages">
+            <div class="chat-msg bot-msg">🛍️ Welcome to Daraz Ultimate! How can I help you today?</div>
+        </div>
+        <div class="p-2 border-top">
+            <div class="input-group">
+                <input type="text" id="chatbotInput" class="form-control" placeholder="Ask me..." onkeydown="if(event.key==='Enter') sendChatbotMessage()">
+                <button class="btn btn-daraz btn-sm" onclick="sendChatbotMessage()"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // ========== FULL DATABASE CONNECTED VERSION ==========
+        
+        let currentUser = null;
+        let products = [];
+        let cartItems = [];
+        let activeFilter = "All";
+        let authModal = null;
+        let paymentModal = null;
+        let currentCheckoutCart = [];
+
+        // ========== ALL PRODUCTS DATA (HAR CATEGORY MEIN 10+ PRODUCTS) ==========
+        const allProductsData = [
+            // Electronic Devices (12 products)
+            { id: 1, title: "Apple iPhone 15 Pro Max", category: "Electronic Devices", price: 399900, imageUrl: "https://images.pexels.com/photos/699122/pexels-photo-699122.jpeg?w=400" },
+            { id: 2, title: "Samsung Galaxy S24 Ultra", category: "Electronic Devices", price: 389900, imageUrl: "https://images.pexels.com/photos/47261/pexels-photo-47261.jpeg?w=400" },
+            { id: 3, title: "MacBook Pro M3", category: "Electronic Devices", price: 429900, imageUrl: "https://images.pexels.com/photos/18105/pexels-photo.jpg?w=400" },
+            { id: 4, title: "iPad Pro 12.9-inch", category: "Electronic Devices", price: 249900, imageUrl: "https://images.pexels.com/photos/1334597/pexels-photo-1334597.jpeg?w=400" },
+            { id: 5, title: "Sony WH-1000XM5", category: "Electronic Devices", price: 84900, imageUrl: "https://images.pexels.com/photos/3780681/pexels-photo-3780681.jpeg?w=400" },
+            { id: 6, title: "Apple Watch Ultra 2", category: "Electronic Devices", price: 149900, imageUrl: "https://images.pexels.com/photos/437037/pexels-photo-437037.jpeg?w=400" },
+            { id: 7, title: "Google Pixel 8 Pro", category: "Electronic Devices", price: 299900, imageUrl: "https://images.pexels.com/photos/699122/pexels-photo-699122.jpeg?w=400" },
+            { id: 8, title: "OnePlus 12", category: "Electronic Devices", price: 189900, imageUrl: "https://images.pexels.com/photos/47261/pexels-photo-47261.jpeg?w=400" },
+            { id: 9, title: "Xiaomi 14 Ultra", category: "Electronic Devices", price: 179900, imageUrl: "https://images.pexels.com/photos/699122/pexels-photo-699122.jpeg?w=400" },
+            { id: 10, title: "Dell XPS 15", category: "Electronic Devices", price: 289900, imageUrl: "https://images.pexels.com/photos/18105/pexels-photo.jpg?w=400" },
+            { id: 11, title: "Lenovo Legion Pro", category: "Electronic Devices", price: 259900, imageUrl: "https://images.pexels.com/photos/18105/pexels-photo.jpg?w=400" },
+            { id: 12, title: "Asus ROG Phone 8", category: "Electronic Devices", price: 199900, imageUrl: "https://images.pexels.com/photos/699122/pexels-photo-699122.jpeg?w=400" },
+            
+            // Electronic Accessories (10 products)
+            { id: 13, title: "AirPods Pro 2nd Gen", category: "Electronic Accessories", price: 54999, imageUrl: "https://images.pexels.com/photos/3780681/pexels-photo-3780681.jpeg?w=400" },
+            { id: 14, title: "Samsung Galaxy Buds2 Pro", category: "Electronic Accessories", price: 28999, imageUrl: "https://images.pexels.com/photos/7846983/pexels-photo-7846983.jpeg?w=400" },
+            { id: 15, title: "Anker Power Bank 20000mAh", category: "Electronic Accessories", price: 7499, imageUrl: "https://images.pexels.com/photos/3865557/pexels-photo-3865557.jpeg?w=400" },
+            { id: 16, title: "Logitech MX Master 3S", category: "Electronic Accessories", price: 18999, imageUrl: "https://images.pexels.com/photos/2115257/pexels-photo-2115257.jpeg?w=400" },
+            { id: 17, title: "Bose SoundLink Flex", category: "Electronic Accessories", price: 45999, imageUrl: "https://images.pexels.com/photos/918446/pexels-photo-918446.jpeg?w=400" },
+            { id: 18, title: "Apple Magic Keyboard", category: "Electronic Accessories", price: 34999, imageUrl: "https://images.pexels.com/photos/2115257/pexels-photo-2115257.jpeg?w=400" },
+            { id: 19, title: "Samsung 1TB SSD", category: "Electronic Accessories", price: 18999, imageUrl: "https://images.pexels.com/photos/3865557/pexels-photo-3865557.jpeg?w=400" },
+            { id: 20, title: "Belkin 3-in-1 Charger", category: "Electronic Accessories", price: 12999, imageUrl: "https://images.pexels.com/photos/3865557/pexels-photo-3865557.jpeg?w=400" },
+            { id: 21, title: "JBL Flip 6 Speaker", category: "Electronic Accessories", price: 24999, imageUrl: "https://images.pexels.com/photos/918446/pexels-photo-918446.jpeg?w=400" },
+            { id: 22, title: "Anker USB-C Hub", category: "Electronic Accessories", price: 8999, imageUrl: "https://images.pexels.com/photos/3865557/pexels-photo-3865557.jpeg?w=400" },
+            
+            // Fashion & Wear (12 products)
+            { id: 23, title: "Nike Air Max 90", category: "Fashion & Wear", price: 18999, imageUrl: "https://images.pexels.com/photos/1598508/pexels-photo-1598508.jpeg?w=400" },
+            { id: 24, title: "Adidas Ultraboost 22", category: "Fashion & Wear", price: 25999, imageUrl: "https://images.pexels.com/photos/1598505/pexels-photo-1598505.jpeg?w=400" },
+            { id: 25, title: "Levi's 501 Jeans", category: "Fashion & Wear", price: 5499, imageUrl: "https://images.pexels.com/photos/1598507/pexels-photo-1598507.jpeg?w=400" },
+            { id: 26, title: "Ray-Ban Aviator", category: "Fashion & Wear", price: 17999, imageUrl: "https://images.pexels.com/photos/2582937/pexels-photo-2582937.jpeg?w=400" },
+            { id: 27, title: "Michael Kors Handbag", category: "Fashion & Wear", price: 49900, imageUrl: "https://images.pexels.com/photos/1152077/pexels-photo-1152077.jpeg?w=400" },
+            { id: 28, title: "Puma RS-X Sneakers", category: "Fashion & Wear", price: 16999, imageUrl: "https://images.pexels.com/photos/1598508/pexels-photo-1598508.jpeg?w=400" },
+            { id: 29, title: "Gucci GG Marmont Bag", category: "Fashion & Wear", price: 189999, imageUrl: "https://images.pexels.com/photos/1152077/pexels-photo-1152077.jpeg?w=400" },
+            { id: 30, title: "Zara Men's Blazer", category: "Fashion & Wear", price: 12999, imageUrl: "https://images.pexels.com/photos/1598507/pexels-photo-1598507.jpeg?w=400" },
+            { id: 31, title: "H&M Summer Dress", category: "Fashion & Wear", price: 3999, imageUrl: "https://images.pexels.com/photos/1598507/pexels-photo-1598507.jpeg?w=400" },
+            { id: 32, title: "The North Face Jacket", category: "Fashion & Wear", price: 34999, imageUrl: "https://images.pexels.com/photos/1598507/pexels-photo-1598507.jpeg?w=400" },
+            { id: 33, title: "Tommy Hilfiger Polo", category: "Fashion & Wear", price: 7999, imageUrl: "https://images.pexels.com/photos/1598507/pexels-photo-1598507.jpeg?w=400" },
+            { id: 34, title: "Calvin Klein Watch", category: "Fashion & Wear", price: 24999, imageUrl: "https://images.pexels.com/photos/437037/pexels-photo-437037.jpeg?w=400" },
+            
+            // Home & Lifestyle (10 products)
+            { id: 35, title: "Dyson V15 Vacuum", category: "Home & Lifestyle", price: 125000, imageUrl: "https://images.pexels.com/photos/4107280/pexels-photo-4107280.jpeg?w=400" },
+            { id: 36, title: "Instant Pot Duo", category: "Home & Lifestyle", price: 28999, imageUrl: "https://images.pexels.com/photos/4959645/pexels-photo-4959645.jpeg?w=400" },
+            { id: 37, title: "Breville Espresso", category: "Home & Lifestyle", price: 87900, imageUrl: "https://images.pexels.com/photos/312418/pexels-photo-312418.jpeg?w=400" },
+            { id: 38, title: "Philips Airfryer", category: "Home & Lifestyle", price: 35999, imageUrl: "https://images.pexels.com/photos/5639252/pexels-photo-5639252.jpeg?w=400" },
+            { id: 39, title: "NordicTrack Treadmill", category: "Home & Lifestyle", price: 299900, imageUrl: "https://images.pexels.com/photos/1954524/pexels-photo-1954524.jpeg?w=400" },
+            { id: 40, title: "IKEA Sofa Bed", category: "Home & Lifestyle", price: 49999, imageUrl: "https://images.pexels.com/photos/4107280/pexels-photo-4107280.jpeg?w=400" },
+            { id: 41, title: "Shark Vacuum Cleaner", category: "Home & Lifestyle", price: 45999, imageUrl: "https://images.pexels.com/photos/4107280/pexels-photo-4107280.jpeg?w=400" },
+            { id: 42, title: "Keurig Coffee Maker", category: "Home & Lifestyle", price: 18999, imageUrl: "https://images.pexels.com/photos/312418/pexels-photo-312418.jpeg?w=400" },
+            { id: 43, title: "Tempur-Pedic Pillow", category: "Home & Lifestyle", price: 12999, imageUrl: "https://images.pexels.com/photos/4107280/pexels-photo-4107280.jpeg?w=400" },
+            { id: 44, title: "Roomba i7 Robot", category: "Home & Lifestyle", price: 79999, imageUrl: "https://images.pexels.com/photos/4107280/pexels-photo-4107280.jpeg?w=400" },
+            
+            // Gaming & Gear (10 products)
+            { id: 45, title: "Logitech G502 Hero", category: "Gaming & Gear", price: 12500, imageUrl: "https://images.pexels.com/photos/2115256/pexels-photo-2115256.jpeg?w=400" },
+            { id: 46, title: "Razer BlackWidow V4", category: "Gaming & Gear", price: 32999, imageUrl: "https://images.pexels.com/photos/2047905/pexels-photo-2047905.jpeg?w=400" },
+            { id: 47, title: "Corsair iCUE 4000X", category: "Gaming & Gear", price: 27999, imageUrl: "https://images.pexels.com/photos/2582932/pexels-photo-2582932.jpeg?w=400" },
+            { id: 48, title: "SteelSeries Arctis 7", category: "Gaming & Gear", price: 23999, imageUrl: "https://images.pexels.com/photos/1846996/pexels-photo-1846996.jpeg?w=400" },
+            { id: 49, title: "Razer Kraken Kitty", category: "Gaming & Gear", price: 21999, imageUrl: "https://images.pexels.com/photos/3786289/pexels-photo-3786289.jpeg?w=400" },
+            { id: 50, title: "PS5 DualSense Controller", category: "Gaming & Gear", price: 12999, imageUrl: "https://images.pexels.com/photos/2115256/pexels-photo-2115256.jpeg?w=400" },
+            { id: 51, title: "Xbox Series X Controller", category: "Gaming & Gear", price: 11999, imageUrl: "https://images.pexels.com/photos/2115256/pexels-photo-2115256.jpeg?w=400" },
+            { id: 52, title: "Nintendo Switch Pro", category: "Gaming & Gear", price: 18999, imageUrl: "https://images.pexels.com/photos/2047905/pexels-photo-2047905.jpeg?w=400" },
+            { id: 53, title: "HyperX QuadCast Mic", category: "Gaming & Gear", price: 15999, imageUrl: "https://images.pexels.com/photos/1846996/pexels-photo-1846996.jpeg?w=400" },
+            { id: 54, title: "LG UltraGear Monitor", category: "Gaming & Gear", price: 129900, imageUrl: "https://images.pexels.com/photos/2582932/pexels-photo-2582932.jpeg?w=400" },
+            
+            // Food & Kitchen (10 products)
+            { id: 55, title: "Non-Stick Cookware Set", category: "Food & Kitchen", price: 4999, imageUrl: "https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?w=400" },
+            { id: 56, title: "Electric Kettle 1.5L", category: "Food & Kitchen", price: 2499, imageUrl: "https://images.pexels.com/photos/1449772/pexels-photo-1449772.jpeg?w=400" },
+            { id: 57, title: "Air Fryer 5.5L", category: "Food & Kitchen", price: 18999, imageUrl: "https://images.pexels.com/photos/5639252/pexels-photo-5639252.jpeg?w=400" },
+            { id: 58, title: "Blender & Juicer Set", category: "Food & Kitchen", price: 7999, imageUrl: "https://images.pexels.com/photos/1449772/pexels-photo-1449772.jpeg?w=400" },
+            { id: 59, title: "Microwave Oven 20L", category: "Food & Kitchen", price: 24999, imageUrl: "https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?w=400" },
+            { id: 60, title: "Knife Set with Block", category: "Food & Kitchen", price: 2999, imageUrl: "https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?w=400" },
+            { id: 61, title: "Dinner Set 24 Pcs", category: "Food & Kitchen", price: 3999, imageUrl: "https://images.pexels.com/photos/1449772/pexels-photo-1449772.jpeg?w=400" },
+            { id: 62, title: "Rice Cooker 1.8L", category: "Food & Kitchen", price: 5499, imageUrl: "https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?w=400" },
+            { id: 63, title: "Stand Mixer", category: "Food & Kitchen", price: 15999, imageUrl: "https://images.pexels.com/photos/5639252/pexels-photo-5639252.jpeg?w=400" },
+            { id: 64, title: "Food Processor", category: "Food & Kitchen", price: 12999, imageUrl: "https://images.pexels.com/photos/1449772/pexels-photo-1449772.jpeg?w=400" },
+            
+            // Sports & Fitness (8 products)
+            { id: 65, title: "Yoga Mat Premium", category: "Sports & Fitness", price: 1499, imageUrl: "https://images.pexels.com/photos/4056723/pexels-photo-4056723.jpeg?w=400" },
+            { id: 66, title: "Adjustable Dumbbells", category: "Sports & Fitness", price: 12999, imageUrl: "https://images.pexels.com/photos/6456924/pexels-photo-6456924.jpeg?w=400" },
+            { id: 67, title: "Exercise Bike", category: "Sports & Fitness", price: 45999, imageUrl: "https://images.pexels.com/photos/1954524/pexels-photo-1954524.jpeg?w=400" },
+            { id: 68, title: "Fitness Tracker Watch", category: "Sports & Fitness", price: 7999, imageUrl: "https://images.pexels.com/photos/437037/pexels-photo-437037.jpeg?w=400" },
+            { id: 69, title: "Resistance Bands Set", category: "Sports & Fitness", price: 999, imageUrl: "https://images.pexels.com/photos/4056723/pexels-photo-4056723.jpeg?w=400" },
+            { id: 70, title: "Skipping Rope", category: "Sports & Fitness", price: 499, imageUrl: "https://images.pexels.com/photos/6456924/pexels-photo-6456924.jpeg?w=400" },
+            { id: 71, title: "Push Up Stand", category: "Sports & Fitness", price: 1299, imageUrl: "https://images.pexels.com/photos/4056723/pexels-photo-4056723.jpeg?w=400" },
+            { id: 72, title: "Gym Gloves", category: "Sports & Fitness", price: 799, imageUrl: "https://images.pexels.com/photos/6456924/pexels-photo-6456924.jpeg?w=400" },
+            
+            // Baby & Kids (8 products)
+            { id: 73, title: "Baby Stroller", category: "Baby & Kids", price: 18999, imageUrl: "https://images.pexels.com/photos/4260321/pexels-photo-4260321.jpeg?w=400" },
+            { id: 74, title: "Baby Crib Bed", category: "Baby & Kids", price: 24999, imageUrl: "https://images.pexels.com/photos/4260321/pexels-photo-4260321.jpeg?w=400" },
+            { id: 75, title: "Kids Learning Tablet", category: "Baby & Kids", price: 4999, imageUrl: "https://images.pexels.com/photos/699122/pexels-photo-699122.jpeg?w=400" },
+            { id: 76, title: "Baby Walker", category: "Baby & Kids", price: 5999, imageUrl: "https://images.pexels.com/photos/4260321/pexels-photo-4260321.jpeg?w=400" },
+            { id: 77, title: "Kids Toy Car", category: "Baby & Kids", price: 3499, imageUrl: "https://images.pexels.com/photos/4260321/pexels-photo-4260321.jpeg?w=400" },
+            { id: 78, title: "Baby Feeding Set", category: "Baby & Kids", price: 1299, imageUrl: "https://images.pexels.com/photos/1449772/pexels-photo-1449772.jpeg?w=400" },
+            { id: 79, title: "Diaper Bag Backpack", category: "Baby & Kids", price: 2499, imageUrl: "https://images.pexels.com/photos/1152077/pexels-photo-1152077.jpeg?w=400" },
+            { id: 80, title: "Kids Bicycle 12 inch", category: "Baby & Kids", price: 12999, imageUrl: "https://images.pexels.com/photos/4260321/pexels-photo-4260321.jpeg?w=400" },
+            
+            // Beauty & Skincare (8 products)
+            { id: 81, title: "Facial Cleanser Set", category: "Beauty & Skincare", price: 2499, imageUrl: "https://images.pexels.com/photos/3738344/pexels-photo-3738344.jpeg?w=400" },
+            { id: 82, title: "Moisturizer Cream", category: "Beauty & Skincare", price: 1799, imageUrl: "https://images.pexels.com/photos/3738344/pexels-photo-3738344.jpeg?w=400" },
+            { id: 83, title: "Sunscreen SPF 50", category: "Beauty & Skincare", price: 1299, imageUrl: "https://images.pexels.com/photos/3738344/pexels-photo-3738344.jpeg?w=400" },
+            { id: 84, title: "Hair Dryer Professional", category: "Beauty & Skincare", price: 5999, imageUrl: "https://images.pexels.com/photos/3738344/pexels-photo-3738344.jpeg?w=400" },
+            { id: 85, title: "Makeup Kit 24 Pcs", category: "Beauty & Skincare", price: 3999, imageUrl: "https://images.pexels.com/photos/3738344/pexels-photo-3738344.jpeg?w=400" },
+            { id: 86, title: "Face Wash & Scrub", category: "Beauty & Skincare", price: 899, imageUrl: "https://images.pexels.com/photos/3738344/pexels-photo-3738344.jpeg?w=400" },
+            { id: 87, title: "Perfume Gift Set", category: "Beauty & Skincare", price: 4999, imageUrl: "https://images.pexels.com/photos/3738344/pexels-photo-3738344.jpeg?w=400" },
+            { id: 88, title: "Nail Polish Set", category: "Beauty & Skincare", price: 1499, imageUrl: "https://images.pexels.com/photos/3738344/pexels-photo-3738344.jpeg?w=400" }
+        ];
+
+        // ========== PRODUCT FUNCTIONS ==========
+        
+        async function loadProductsFromDB() {
+            try {
+                // First try to load from database
+                const response = await fetch('/api/Product');
+                if (response.ok && response.status !== 204) {
+                    const dbProducts = await response.json();
+                    if (dbProducts && dbProducts.length > 0) {
+                        products = dbProducts;
+                    } else {
+                        // If database empty, use local data and seed
+                        products = allProductsData;
+                        await seedProductsToDB();
+                    }
+                } else {
+                    products = allProductsData;
+                    await seedProductsToDB();
+                }
+                document.getElementById('totalProductsCount').innerText = products.length;
+                renderMarketplaceProducts(getFilteredProducts());
+                renderAdminTable();
+            } catch(e) {
+                console.log('Using local products:', e);
+                products = allProductsData;
+                renderMarketplaceProducts(getFilteredProducts());
+                renderAdminTable();
+            }
+        }
+
+        async function seedProductsToDB() {
+            for (const product of allProductsData) {
+                try {
+                    await fetch('/api/Product', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(product)
+                    });
+                } catch(e) {
+                    console.log('Error seeding product:', product.title);
+                }
+            }
+        }
+
+        function getFilteredProducts() {
+            let filtered = products;
+            if (activeFilter !== 'All') {
+                filtered = products.filter(p => p.category === activeFilter);
+            }
+            const search = document.getElementById('searchField')?.value.toLowerCase() || '';
+            if (search) {
+                filtered = filtered.filter(p => p.title.toLowerCase().includes(search));
+            }
+            return filtered;
+        }
+
+        function renderMarketplaceProducts(items) {
+            const container = document.getElementById('productContainer');
+            if (!items || items.length === 0) {
+                container.innerHTML = '<div class="text-center py-5">No products found</div>';
+                return;
+            }
+            container.innerHTML = items.map(p => `
+                <div class="product-card">
+                    <img src="${p.imageUrl || p.img || 'https://placehold.co/400x300/f85606/white?text=Product'}" class="product-img" onerror="this.src='https://placehold.co/400x300/f85606/white?text=Product'">
+                    <div class="p-3">
+                        <span class="small text-orange fw-bold">${p.category}</span>
+                        <h6 class="mt-1 fw-semibold" style="font-size:13px;">${p.title.substring(0, 40)}</h6>
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                            <span class="fw-bold text-dark fs-5">Rs. ${(p.price).toLocaleString()}</span>
+                            <button class="btn btn-daraz btn-sm py-1 px-3 rounded-pill" onclick="addToCartDB(${p.id})"><i class="fas fa-cart-plus"></i> Add</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ========== CART FUNCTIONS (DATABASE) ==========
+        
+        async function loadCartFromDB() {
+            try {
+                const response = await fetch('/api/Cart');
+                if (response.ok) {
+                    cartItems = await response.json();
+                    updateCartUI();
+                }
+            } catch(e) {
+                console.log('Error loading cart:', e);
+            }
+        }
+
+        async function addToCartDB(productId, quantity = 1) {
+            if (!currentUser) {
+                showToast("Please login first!");
+                openAuthModal();
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/Cart/add', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ productId: productId, quantity: quantity })
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    showToast(result.message || "🛒 Added to cart!");
+                    await loadCartFromDB();
+                } else {
+                    showToast(result.message || "Error adding to cart");
+                }
+            } catch(e) {
+                showToast("Error adding to cart");
+            }
+        }
+
+        async function updateCartQuantityDB(cartId, newQuantity) {
+            if (newQuantity < 1) {
+                await removeCartItem(cartId);
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/Cart/update', {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ cartId: cartId, quantity: newQuantity })
+                });
+                if (response.ok) {
+                    await loadCartFromDB();
+                }
+            } catch(e) {
+                showToast("Error updating quantity");
+            }
+        }
+
+        async function removeCartItem(cartId) {
+            try {
+                const response = await fetch(`/api/Cart/remove/${cartId}`, {
+                    method: 'DELETE'
+                });
+                if (response.ok) {
+                    showToast("Item removed from cart");
+                    await loadCartFromDB();
+                }
+            } catch(e) {
+                showToast("Error removing item");
+            }
+        }
+
+        async function checkout() {
+            if (!currentUser) {
+                showToast("Please login first!");
+                openAuthModal();
+                return;
+            }
+            
+            if (cartItems.length === 0) {
+                showToast("Cart is empty!");
+                return;
+            }
+            
+            currentCheckoutCart = [...cartItems];
+            const total = cartItems.reduce((s, i) => s + ((i.product?.price || 0) * (i.quantity || 1)), 0);
+            
+            const orderSummaryHtml = currentCheckoutCart.map(item => `
+                <div class="d-flex justify-content-between mb-2">
+                    <span>${item.product?.title?.substring(0, 35)} x ${item.quantity}</span>
+                    <span>Rs. ${((item.product?.price || 0) * item.quantity).toLocaleString()}</span>
+                </div>
+            `).join('');
+            
+            document.getElementById('paymentOrderSummary').innerHTML = `
+                <div class="fw-bold mb-2"><i class="fas fa-receipt me-1"></i>Order Summary:</div>
+                ${orderSummaryHtml}
+                <hr class="my-2">
+                <div class="d-flex justify-content-between fw-bold">
+                    <span>Total:</span>
+                    <span class="text-orange">Rs. ${total.toLocaleString()}</span>
+                </div>
+            `;
+            document.getElementById('paymentAmount').innerHTML = `Rs. ${total.toLocaleString()}`;
+            paymentModal.show();
+        }
+
+        async function processPayment(e) {
+            e.preventDefault();
+            
+            const cardNum = document.getElementById('cardNumber').value;
+            const expiry = document.getElementById('cardExpiry').value;
+            const cvv = document.getElementById('cardCvv').value;
+            const cardName = document.getElementById('cardName').value;
+            
+            if (!cardNum || !expiry || !cvv || !cardName) { 
+                showToast("Please fill all card details!"); 
+                return; 
+            }
+            
+            try {
+                const checkoutData = {
+                    paymentMethod: "Credit Card",
+                    cardLast4: cardNum.slice(-4),
+                    totalAmount: cartItems.reduce((s, i) => s + ((i.product?.price || 0) * (i.quantity || 1)), 0),
+                    items: cartItems.map(i => ({
+                        productId: i.productId,
+                        productName: i.product?.title,
+                        price: i.product?.price,
+                        quantity: i.quantity
+                    }))
+                };
+                
+                const response = await fetch('/api/Cart/checkout', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(checkoutData)
+                });
+                const result = await response.json();
+                
+                if (response.ok) {
+                    document.getElementById('cardNumber').value = '';
+                    document.getElementById('cardExpiry').value = '';
+                    document.getElementById('cardCvv').value = '';
+                    document.getElementById('cardName').value = '';
+                    paymentModal.hide();
+                    toggleCart();
+                    
+                    showOrderSuccess(result.orderId, result.orderNumber, result.totalAmount, result.orderItems);
+                    await loadCartFromDB();
+                } else {
+                    showToast(result.message || "Checkout failed");
+                }
+            } catch(e) {
+                showToast("Error during checkout");
+            }
+        }
+
+        function showOrderSuccess(orderId, orderNumber, totalAmount, orderItems) {
+            const itemsHtml = orderItems?.map(item => `
+                <div class="d-flex justify-content-between mb-2 order-item-card p-2">
+                    <span><i class="fas fa-box me-2 text-orange"></i>${item.productName}</span>
+                    <span>Rs. ${(item.price * item.quantity).toLocaleString()}</span>
+                </div>
+            `).join('');
+            
+            const modalHtml = `
+                <div class="modal fade" id="orderSuccessModal" tabindex="-1" data-bs-backdrop="static">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content rounded-4 border-0">
+                            <div class="modal-header border-0 bg-success text-white rounded-top-4">
+                                <h5 class="fw-bold"><i class="fas fa-check-circle me-2"></i>Order Placed Successfully!</h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body p-4">
+                                <div class="text-center mb-3">
+                                    <i class="fas fa-check-circle text-success" style="font-size: 60px;"></i>
+                                    <h3 class="mt-2 fw-bold">Thank You for Your Order!</h3>
+                                    <p class="text-muted">Your order has been placed successfully.</p>
+                                </div>
+                                <div class="bg-light p-3 rounded-3 mb-3">
+                                    <div class="row">
+                                        <div class="col-6"><strong>Order Number:</strong><br>${orderNumber}</div>
+                                        <div class="col-6"><strong>Order ID:</strong><br>#${orderId}</div>
+                                        <div class="col-12 mt-2"><strong>Order Date:</strong><br>${new Date().toLocaleString()}</div>
+                                    </div>
+                                </div>
+                                <div class="bg-white border rounded-3 p-3 mb-3">
+                                    <div class="fw-bold mb-2"><i class="fas fa-list-ul me-1"></i>Order Items:</div>
+                                    ${itemsHtml || '<p>Loading...</p>'}
+                                    <hr class="my-2">
+                                    <div class="d-flex justify-content-between fw-bold fs-5">
+                                        <span>Total Amount:</span>
+                                        <span class="text-orange">Rs. ${totalAmount?.toLocaleString()}</span>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <p class="small text-muted">A confirmation email has been sent to your registered email address.</p>
+                                    <button class="btn btn-daraz w-100 rounded-pill" data-bs-dismiss="modal">Continue Shopping</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            const existingModal = document.getElementById('orderSuccessModal');
+            if (existingModal) existingModal.remove();
+            
+            document.body.insertAdjacentHTML('beforeend', modalHtml);
+            const modal = new bootstrap.Modal(document.getElementById('orderSuccessModal'));
+            modal.show();
+            
+            document.getElementById('orderSuccessModal').addEventListener('hidden.bs.modal', function() {
+                this.remove();
+            });
+        }
+
+        function updateCartUI() {
+            const count = cartItems.reduce((a, b) => a + (b.quantity || 1), 0);
+            document.getElementById('cartCount').innerText = count;
+            
+            const container = document.getElementById('cartItems');
+            if (!cartItems || cartItems.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-5">
+                        <i class="fas fa-shopping-cart fa-4x text-muted mb-3"></i>
+                        <p class="text-muted">Your cart is empty</p>
+                        <button class="btn btn-daraz btn-sm mt-2" onclick="toggleCart()">Start Shopping</button>
+                    </div>
+                `;
+                document.getElementById('cartFooter').innerHTML = '';
+                return;
+            }
+            
+            container.innerHTML = cartItems.map(c => `
+                <div class="d-flex gap-3 border-bottom pb-3 mb-3">
+                    <img src="${c.product?.imageUrl || 'https://placehold.co/70x70/f85606/white?text=Product'}" width="70" height="70" class="rounded-3" style="object-fit:cover" onerror="this.src='https://placehold.co/70x70/f85606/white?text=Product'">
+                    <div class="flex-grow-1">
+                        <h6 class="mb-1 fw-semibold">${c.product?.title?.substring(0, 40) || 'Product'}</h6>
+                        <div class="text-orange fw-bold mb-2">Rs. ${(c.product?.price || 0).toLocaleString()}</div>
+                        <div class="d-flex align-items-center gap-2">
+                            <button class="quantity-btn" onclick="updateCartQuantityDB(${c.id}, ${(c.quantity || 1) - 1})">-</button>
+                            <span class="fw-semibold text-center" style="width: 35px;">${c.quantity || 1}</span>
+                            <button class="quantity-btn" onclick="updateCartQuantityDB(${c.id}, ${(c.quantity || 1) + 1})">+</button>
+                            <button class="btn btn-sm btn-outline-danger ms-auto rounded-circle" onclick="removeCartItem(${c.id})" style="width: 32px; height: 32px;">
+                                <i class="fas fa-trash-alt fa-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            const total = cartItems.reduce((s, i) => s + ((i.product?.price || 0) * (i.quantity || 1)), 0);
+            const itemCount = cartItems.reduce((s, i) => s + (i.quantity || 1), 0);
+            
+            document.getElementById('cartFooter').innerHTML = `
+                <div class="bg-light p-3 rounded-3 mb-3">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Items (${itemCount}):</span>
+                        <span>Rs. ${total.toLocaleString()}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Shipping:</span>
+                        <span class="text-success">Free</span>
+                    </div>
+                    <hr class="my-2">
+                    <div class="d-flex justify-content-between fw-bold fs-5">
+                        <span>Total:</span>
+                        <span class="text-orange">Rs. ${total.toLocaleString()}</span>
+                    </div>
+                </div>
+                <button class="btn btn-daraz w-100 py-2 rounded-pill fw-bold" onclick="checkout()">
+                    <i class="fas fa-credit-card me-2"></i>Proceed to Checkout
+                </button>
+                <button class="btn btn-outline-secondary w-100 mt-2 rounded-pill" onclick="toggleCart()">
+                    Continue Shopping
+                </button>
+            `;
+        }
+
+        // ========== ADMIN FUNCTIONS ==========
+        
+        async function renderAdminTable() {
+            const tbody = document.getElementById('adminTableBody');
+            if (!tbody) return;
+            document.getElementById('adminTotalCount').innerHTML = `${products.length} items`;
+            tbody.innerHTML = products.map(p => `
+                <tr>
+                    <td><img src="${p.imageUrl || 'https://placehold.co/50x50/f85606/white?text=Img'}" width="50" height="50" style="object-fit:cover"></td>
+                    <td style="font-size:13px;">${p.title.substring(0, 35)}</td>
+                    <td>${p.category}</td>
+                    <td class="text-orange fw-bold">Rs.${(p.price).toLocaleString()}</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary me-1 rounded-pill" onclick="loadProductIntoForm(${p.id})"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-sm btn-outline-danger rounded-pill" onclick="deleteProductNode(${p.id})"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        async function handleFormSubmission(e) {
+            e.preventDefault();
+            const id = document.getElementById('crudProductId').value;
+            const product = {
+                title: document.getElementById('crudTitle').value,
+                category: document.getElementById('crudCategory').value,
+                price: parseFloat(document.getElementById('crudPrice').value),
+                imageUrl: document.getElementById('crudImg').value || 'https://placehold.co/400x300/f85606/white?text=Product'
+            };
+            
+            try {
+                if (id) {
+                    await fetch(`/api/Product/${id}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(product)
+                    });
+                    showToast("✅ Product updated");
+                } else {
+                    await fetch('/api/Product', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(product)
+                    });
+                    showToast("✅ New product added");
+                }
+                clearCrudForm();
+                await loadProductsFromDB();
+            } catch(e) {
+                showToast("Error saving product");
+            }
+        }
+
+        async function deleteProductNode(id) {
+            if (confirm('Delete this product?')) {
+                try {
+                    await fetch(`/api/Product/${id}`, { method: 'DELETE' });
+                    showToast("🗑️ Product deleted");
+                    await loadProductsFromDB();
+                } catch(e) {
+                    showToast("Error deleting product");
+                }
+            }
+        }
+
+        function loadProductIntoForm(id) {
+            const p = products.find(p => p.id === id);
+            if (p) {
+                document.getElementById('crudProductId').value = p.id;
+                document.getElementById('crudTitle').value = p.title;
+                document.getElementById('crudCategory').value = p.category;
+                document.getElementById('crudPrice').value = p.price;
+                document.getElementById('crudImg').value = p.imageUrl || '';
+                document.getElementById('formActionTitle').innerHTML = '<i class="fas fa-pen me-2"></i>Edit Product';
+                document.getElementById('submitBtnText').innerText = 'Update';
+            }
+        }
+
+        function clearCrudForm() {
+            document.getElementById('productCrudForm').reset();
+            document.getElementById('crudProductId').value = '';
+            document.getElementById('formActionTitle').innerHTML = '<i class="fas fa-plus-circle me-2"></i>Add New Product';
+            document.getElementById('submitBtnText').innerText = 'Save';
+        }
+
+        // ========== AUTH FUNCTIONS ==========
+        
+        async function checkAuth() {
+            try {
+                const response = await fetch('/api/Auth/check');
+                if (response.ok) {
+                    currentUser = await response.json();
+                    updateAuthWidget();
+                    await loadCartFromDB();
+                }
+            } catch(e) {
+                console.log('Not logged in');
+            }
+        }
+
+        async function executeRegister(e) {
+            e.preventDefault();
+            const data = {
+                name: document.getElementById('regName').value,
+                email: document.getElementById('regEmail').value,
+                password: document.getElementById('regPass').value,
+                role: document.getElementById('regRole').value
+            };
+            
+            try {
+                const response = await fetch('/api/Auth/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    showToast(result.message);
+                    currentUser = { name: result.name, role: result.role };
+                    updateAuthWidget();
+                    authModal.hide();
+                    await loadCartFromDB();
+                } else {
+                    showToast(result.message);
+                }
+            } catch(e) {
+                showToast("Registration error");
+            }
+        }
+
+        async function executeLogin(e) {
+            e.preventDefault();
+            const data = {
+                email: document.getElementById('loginEmail').value,
+                password: document.getElementById('loginPass').value
+            };
+            
+            try {
+                const response = await fetch('/api/Auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    showToast(result.message);
+                    currentUser = { name: result.name, role: result.role };
+                    updateAuthWidget();
+                    authModal.hide();
+                    await loadCartFromDB();
+                } else {
+                    showToast(result.message);
+                }
+            } catch(e) {
+                showToast("Login error");
+            }
+        }
+
+        async function handleLogout() {
+            await fetch('/api/Auth/logout', { method: 'POST' });
+            currentUser = null;
+            updateAuthWidget();
+            showToast("Logged out successfully.");
+            document.getElementById('adminControlDashboardView')?.classList.add('d-none');
+            document.getElementById('customerMarketplaceView')?.classList.remove('d-none');
+            await loadCartFromDB();
+        }
+
+        function updateAuthWidget() {
+            const w = document.getElementById('authTopWidget');
+            if (currentUser) {
+                w.innerHTML = `<span class="me-2">👋 Welcome, ${currentUser.name}</span>
+                              <a href="#" onclick="handleLogout()" class="text-danger fw-bold ms-2"><i class="fas fa-sign-out-alt"></i> Logout</a>`;
+            } else {
+                w.innerHTML = `<a href="#" onclick="openAuthModal()" class="fw-bold"><i class="fas fa-key me-1"></i> Login / Signup</a>`;
+            }
+        }
+
+        function checkAdminAccess() {
+            if (!currentUser) { showToast("Please login first!"); openAuthModal(); return; }
+            if (currentUser.role !== 'ADMIN') { showToast("❌ Admin access required! Sign up as Administrator."); return; }
+            switchToAdminView(true);
+        }
+
+        function switchToAdminView(show) {
+            if (show) {
+                document.getElementById('activeAdminDisplay').innerHTML = currentUser.name;
+                document.getElementById('customerMarketplaceView').classList.add('d-none');
+                document.getElementById('headerSearchWrapper').classList.add('d-none');
+                document.getElementById('cartActionIcon').classList.add('d-none');
+                document.getElementById('adminControlDashboardView').classList.remove('d-none');
+                renderAdminTable();
+            } else {
+                document.getElementById('adminControlDashboardView').classList.add('d-none');
+                document.getElementById('customerMarketplaceView').classList.remove('d-none');
+                document.getElementById('headerSearchWrapper').classList.remove('d-none');
+                document.getElementById('cartActionIcon').classList.remove('d-none');
+                renderMarketplaceProducts(getFilteredProducts());
+            }
+        }
+
+        // ========== UI FUNCTIONS ==========
+        
+        function filterCategory(cat) {
+            activeFilter = cat;
+            document.querySelectorAll('.category-item').forEach(el => el.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            const displayName = cat === 'All' ? 'Featured Products' : cat;
+            document.getElementById('sectionTitle').innerHTML = `<i class="fas fa-tag text-orange me-2"></i>${displayName}`;
+            renderMarketplaceProducts(getFilteredProducts());
+        }
+
+        function filterProductsBySearch() {
+            renderMarketplaceProducts(getFilteredProducts());
+        }
+
+        function toggleCart() {
+            document.getElementById('cartSidebar').classList.toggle('open');
+            document.getElementById('cartOverlay').classList.toggle('open');
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toastMsg');
+            t.innerText = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 3000);
+        }
+
+        function toggleChatbot() { document.getElementById('chatbotWindow').classList.toggle('open'); }
+
+        function sendChatbotMessage() {
+            const inp = document.getElementById('chatbotInput'), msg = inp.value.trim();
+            if (!msg) return;
+            appendChat(msg, 'user-msg');
+            inp.value = '';
+            setTimeout(() => {
+                let reply = "🛍️ Welcome to Daraz Ultimate! We have 88+ products across 9 categories. You can add items to cart, update quantities, and checkout securely!";
+                if (msg.toLowerCase().includes('electronic')) reply = "📱 We have iPhones, Samsung, MacBooks, iPads, Sony Headphones, Apple Watches, and more!";
+                else if (msg.toLowerCase().includes('fashion')) reply = "👕 Fashion items: Nike Shoes, Adidas, Levi's Jeans, Ray-Ban Sunglasses, Michael Kors Handbags!";
+                else if (msg.toLowerCase().includes('cart')) reply = "🛒 Your cart saves to database! You can update quantities, remove items, and checkout securely.";
+                else if (msg.toLowerCase().includes('admin')) reply = "🔐 Admin panel requires login with Administrator account. Sign up as Administrator first!";
+                else if (msg.toLowerCase().includes('payment')) reply = "💳 Payment is in test mode. Any card details work for testing purposes.";
+                appendChat(reply, 'bot-msg');
+            }, 300);
+        }
+
+        function appendChat(txt, cls) {
+            const div = document.createElement('div');
+            div.className = `chat-msg ${cls}`;
+            div.innerHTML = txt;
+            document.getElementById('chatbotMessages').appendChild(div);
+            div.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function openAuthModal() { authModal.show(); }
+        function switchToRegister() { document.getElementById('loginFormSegment').classList.add('d-none'); document.getElementById('registerFormSegment').classList.remove('d-none'); }
+        function switchToLogin() { document.getElementById('registerFormSegment').classList.add('d-none'); document.getElementById('loginFormSegment').classList.remove('d-none'); }
+
+        // ========== INITIALIZE ==========
+        document.addEventListener("DOMContentLoaded", () => {
+            authModal = new bootstrap.Modal(document.getElementById('authModal'));
+            paymentModal = new bootstrap.Modal(document.getElementById('paymentModal'));
+            checkAuth();
+            loadProductsFromDB();
+        });
+
+        // Make functions global
+        window.filterProductsBySearch = filterProductsBySearch;
+        window.filterCategory = filterCategory;
+        window.addToCartDB = addToCartDB;
+        window.toggleCart = toggleCart;
+        window.switchToAdminView = switchToAdminView;
+        window.handleFormSubmission = handleFormSubmission;
+        window.loadProductIntoForm = loadProductIntoForm;
+        window.deleteProductNode = deleteProductNode;
+        window.clearCrudForm = clearCrudForm;
+        window.openAuthModal = openAuthModal;
+        window.executeLogin = executeLogin;
+        window.executeRegister = executeRegister;
+        window.handleLogout = handleLogout;
+        window.sendChatbotMessage = sendChatbotMessage;
+        window.toggleChatbot = toggleChatbot;
+        window.checkAdminAccess = checkAdminAccess;
+        window.switchToRegister = switchToRegister;
+        window.switchToLogin = switchToLogin;
+        window.removeCartItem = removeCartItem;
+        window.checkout = checkout;
+        window.processPayment = processPayment;
+        window.updateCartQuantityDB = updateCartQuantityDB;
+    </script>
+</body>
+</html>
